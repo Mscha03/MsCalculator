@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Small Calculator</string>
+    <string name="clear_button_text">C</string>
+    <string name="number_7_button">7</string>
+    <string name="number_8_button">8</string>
+    <string name="number_9_button">9</string>
+    <string name="number_4_button">4</string>
+    <string name="number_5_button">5</string>
+    <string name="number_6_button">6</string>
+    <string name="number_1_button">1</string>
+    <string name="number_2_button">2</string>
+    <string name="number_3_button">3</string>
+    <string name="number_0_button">0</string>
+    <string name="dote_button">.</string>
+    <string name="contentDescription_power_button">power</string>
+    <string name="contentDescription_square_root_button">square root</string>
+    <string name="contentDescription_divide_button">divide</string>
+    <string name="contentDescription_multiply_button">multiply</string>
+    <string name="contentDescription_sign_button">change sign of number</string>
+    <string name="contentDescription_plus_button">plus</string>
+    <string name="contentDescription_equal_button">equal</string>
+    <string name="contentDescription_minus_button">minus</string>
 </resources>

@@ -13,7 +13,195 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/clear_button"
+                    style="@style/operator_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/clear_button_text" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/power_button"
+                    style="@style/operator_button_style"
+                    android:contentDescription="@string/contentDescription_power_button"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/power_icon"
+                    app:iconSize="45dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/square_root_button"
+                    style="@style/operator_button_style"
+                    android:contentDescription="@string/contentDescription_square_root_button"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/square_root_icon"
+                    app:iconSize="40dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/divide_button"
+                    style="@style/operator_button_style"
+                    android:contentDescription="@string/contentDescription_divide_button"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/divide_icon" />
+
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number7_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_7_button" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number8_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_8_button" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number9_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_9_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/multiply_button"
+                    style="@style/operator_button_style"
+                    android:contentDescription="@string/contentDescription_multiply_button"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/multiply_icon" />
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number4_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_4_button" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number5_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_5_button" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number6_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_6_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/minus_button"
+                    style="@style/operator_button_style"
+                    android:contentDescription="@string/contentDescription_minus_button"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/minus_icon" />
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number1_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_1_button" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number2_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_2_button" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number3_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_3_button" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/plus_button"
+                    style="@style/operator_button_style"
+                    android:contentDescription="@string/contentDescription_plus_button"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/plus_icon" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingHorizontal="5dp">
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/sign_button"
+                    style="@style/number_button_style"
+                    android:contentDescription="@string/contentDescription_sign_button"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/sign_icon" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/number0_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/number_0_button" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dote_button"
+                    style="@style/number_button_style"
+                    app:cornerRadius="25dp"
+                    android:text="@string/dote_button"
+                    android:textSize="50sp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/equal_button"
+                    style="@style/operator_button_style"
+                    android:contentDescription="@string/contentDescription_equal_button"
+                    app:cornerRadius="25dp"
+                    app:icon="@drawable/equal_icon" />
+
+
+            </LinearLayout>
+
+
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
