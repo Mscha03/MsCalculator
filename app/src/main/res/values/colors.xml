@@ -4,5 +4,7 @@
     <color name="operator_text_color">#C15904</color>
     <color name="number_background_color">#EEEEEE</color>
     <color name="number_text_color">#000</color>
+    <color name="formula_text_color">#858383</color>
+    <color name="answer_text_color">#000000</color>
 
 </resources>
