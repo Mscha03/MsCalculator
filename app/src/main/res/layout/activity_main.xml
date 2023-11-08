@@ -38,7 +38,6 @@
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:gravity="end|bottom"
-                android:text="-2000"
                 android:textColor="@color/answer_text_color"
                 android:textSize="60sp" />
         </LinearLayout>
@@ -85,7 +84,7 @@
                     app:iconSize="40dp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/pi"
+                    android:id="@+id/pi_button"
                     style="@style/operator_button_style"
                     android:contentDescription="@string/pi_number"
                     app:cornerRadius="25dp"
