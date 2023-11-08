@@ -20,4 +20,8 @@
     <string name="contentDescription_plus_button">plus</string>
     <string name="contentDescription_equal_button">equal</string>
     <string name="contentDescription_minus_button">minus</string>
+    <string name="brakets">brakets</string>
+    <string name="percent">percent</string>
+    <string name="pi_number">pi number</string>
+    <string name="clear_button_hint">clear one character</string>
 </resources>

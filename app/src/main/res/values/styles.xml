@@ -27,7 +27,6 @@
         <item name="iconGravity">textStart</item>
         <item name="iconTint">@color/operator_text_color</item>
         <item name="iconSize">30dp</item>
-        <item name="layout_constraintWidth_max">320dp</item>
     </style>
 
 
