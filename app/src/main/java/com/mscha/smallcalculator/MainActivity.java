@@ -6,8 +6,9 @@ import android.os.Bundle;
 
 import com.mscha.smallcalculator.databinding.ActivityMainBinding;
 
-import java.util.Arrays;
+import java.util.Objects;
 import java.util.Stack;
+import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         Stack<String> lastInput = new Stack<>();
+        Stack<String> inBracketEqual = new Stack<>();
 
         //textview
         mainBinding.formulaTextview.setText(mathProblem);
+        mainBinding.answerFormula.setText("0");
 
         //number button
         mainBinding.number0Button.setOnClickListener(view -> {
@@ -74,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mainBinding.clearButton.setOnClickListener(view -> {
-            if (mathProblem == lastInput.peek()){
-                lastInput.pop();
-            }
             if (!lastInput.empty()) {
+                if (mathProblem == lastInput.peek()){
+                    lastInput.pop();
+                }
                 mathProblem = lastInput.pop();
                 mainBinding.formulaTextview.setText(mathProblem);
             } else if (!mathProblem.isEmpty()) {
@@ -123,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
             lastInput.push(mathProblem);
         });
         mainBinding.bracketButton.setOnClickListener(view -> {
-            if ((mathProblem.isEmpty() || isOperator(lastInput(mathProblem))) && lastInput(mathProblem) != ')') {
+            if ((mathProblem.isEmpty() || isOperator(lastInput(mathProblem))) &&
+                    !lastInput(mathProblem).equals(")")) {
                 mathProblem += "(";
                 openBrackets++;
             } else if (openBrackets == 0) {
@@ -137,14 +141,19 @@ public class MainActivity extends AppCompatActivity {
             lastInput.push(mathProblem);
         });
         mainBinding.equalButton.setOnClickListener(view -> {
-            mainBinding.answerFormula.setText(mathProblem);
+            StringBuilder builder = new StringBuilder();
+            for(String s : infixToPrefix(mathProblem)) {
+                builder.append(s);
+            }
+            String str = builder.toString();
+            mainBinding.answerFormula.setText(str);
         });
 
     }
 
     private void numberButtonFunction(String number,Stack<String> lastInput) {
 
-        if (mathProblem.isEmpty() || lastInput(mathProblem) != ')') {
+        if (mathProblem.isEmpty() || !lastInput(mathProblem).equals(")")) {
             mathProblem += number;
         }else{
             mathProblem += "×("+number;
@@ -154,19 +163,73 @@ public class MainActivity extends AppCompatActivity {
         lastInput.push(mathProblem);
     }
 
+    public static String[] infixToPrefix(String infixString) {
+        Stack<String> stack = new Stack<>();
+        String[] infix = dividingEquation(infixString);
+        reverseArray(infix);
+        Vector<String> prefix = new Vector<>();
 
-    //تابعی که
-    // آرایه ای از استرینگ که هر علامت و خونه یه دونه شو اشغال میکنه
-    // به اپراتوی رسیدیم خودشو و چپ وراستشو مرتب و یکی میکنیم
-    // به غیر از پرانتز که باید جدا استک بشه
+        for (int i = 0; i < infix.length; i++) {
+            String currentChar = infix[i];
+
+            if (isOperand(currentChar)) {
+                prefix.add(currentChar);
+            } else if (Objects.equals(currentChar, ")")) {
+                stack.push(currentChar);
+            } else if (Objects.equals(currentChar, "(")) {
+                while (!stack.isEmpty() && !Objects.equals(stack.peek(), ")")) {
+                    prefix.add(stack.pop());
+                }
+                stack.pop(); // Pop the '('
+
+            } else if (isOperator(currentChar)) {
+                while (!stack.isEmpty() && precedence(currentChar) < precedence(stack.peek())) {
+                    prefix.add(stack.pop());
+                }
+                stack.push(currentChar);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            prefix.add(stack.pop());
+        }
+
+
+        String[] prefixHelper = prefix.toArray(new String[prefix.size()]);
+        reverseArray(prefixHelper);
+        return prefixHelper;
+    }
+
+    private static boolean isOperand(String s) {
+//        return Character.isLetterOrDigit(c);
+        return android.text.TextUtils.isDigitsOnly(s);
+    }
+
+    private static boolean isOperator(String c) {
+        return Objects.equals(c, "+") || Objects.equals(c, "-") ||
+                Objects.equals(c, "×") || Objects.equals(c, "/") || Objects.equals(c, "^");
+    }
+
+    private static int precedence(String c) {
+        if (Objects.equals(c, "^")) {
+            return 3;
+        } else if (Objects.equals(c, "×") || Objects.equals(c, "/")) {
+            return 2;
+        } else if (Objects.equals(c, "+") || Objects.equals(c, "-")) {
+            return 1;
+        } else {
+            return 0; // Assuming all other characters have lowest precedence
+        }
+    }
 
     public static String[] dividingEquation(String Entry) {
-        String[] arrangedString = new String[((2*numberOfOperator(Entry))+1) - (numberOfBrackets(Entry))];
+        String[] arrangedString = new String[((2*numberOfOperator(Entry))+1) + (numberOfBrackets(Entry))];
         char[] cha = Entry.toCharArray();
         String member = "";
         int j = 0;
         for (int i = 0; i < Entry.length(); i++) {
-            if (!isOperator(cha[i])) {
+            if (!isOperator(String.valueOf(cha[i])) && !isBracket(String.valueOf(cha[i]))){
+
                 member += cha[i];
                 if(i == Entry.length() -1) {
                     arrangedString[j] = member;
@@ -186,16 +249,15 @@ public class MainActivity extends AppCompatActivity {
         return arrangedString;
     }
 
-    public static boolean isOperator(char o) {
-        return o == '+' || o == '-' || o == '×' || o == '/' ||
-                o == '(' || o == ')' || o == '^' || o == '√' || o == '%';
+    private static boolean isBracket(String s) {
+        return String.valueOf(s).equals("(") || String.valueOf(s).equals(")");
     }
 
     public static int numberOfBrackets(String Entry) {
         int answer=0;
         char[] cha = Entry.toCharArray();
         for (int i = 0; i < Entry.length(); i++){
-            if(cha[i]=='(' || cha[i]==')') {
+            if(isBracket(String.valueOf(cha[i]))) {
                 answer++;
             }
         }
@@ -206,53 +268,29 @@ public class MainActivity extends AppCompatActivity {
         int answer=0;
         char[] cha = Entry.toCharArray();
         for (int i = 0; i < Entry.length(); i++){
-            if(isOperator(cha[i])) {
+            if(isOperator(String.valueOf(cha[i]))) {
                 answer++;
             }
         }
         return answer;
     }
 
-    public static char lastInput(String Entry) {
+    public static String lastInput(String Entry) {
         if (!Entry.isEmpty()){
         char[] E = Entry.toCharArray();
-        return E[Entry.length()-1];
+        return (String.valueOf(E[Entry.length()-1])) ;
         } else {
-            return ' ';
+            return " ";
         }
     }
 
-    public static void change(char[] ca, int ci){
-
-    }
-
-    public static String toPrefix(String infix) {
-        char[] problem = infix.toCharArray();
-        char[] prefix = new char[5];
-        for (int i = 4; i > 0; i--){
-            for (int j=0; j<infix.length(); j++){
-                if (precedence(problem[j]) == i){
-                    //solve problem
-                }
-            }
-        }
-
-        return prefix.toString();
-    }
-
-    private static int precedence(char c) {
-        if (c == '(') {
-            return 4;
-        }else if (c == '^') {
-            return 3;
-        } else if (c == '*' || c == '/') {
-            return 2;
-        } else if (c == '+' || c == '-') {
-            return 1;
-        } else {
-            return 0; // Assuming all other characters have lowest precedence
+    public static void reverseArray(String[] validData) {
+        for(int i = 0; i < validData.length / 2; i++)
+        {
+            String temp = validData[i];
+            validData[i] = validData[validData.length - i - 1];
+            validData[validData.length - i - 1] = temp;
         }
     }
 
 }
-
