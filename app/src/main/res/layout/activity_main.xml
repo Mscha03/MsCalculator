@@ -265,12 +265,7 @@
                     app:cornerRadius="25dp"
                     app:icon="@drawable/equal_icon" />
 
-
             </LinearLayout>
-
-
-
-
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </RelativeLayout>

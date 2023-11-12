@@ -1,5 +1,8 @@
 package com.mscha.smallcalculator;
 
+import static java.lang.Double.sum;
+import static java.lang.Math.pow;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -25,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         Stack<String> lastInput = new Stack<>();
-        Stack<String> inBracketEqual = new Stack<>();
 
         //textview
         mainBinding.formulaTextview.setText(mathProblem);
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         mainBinding.clearButton.setOnClickListener(view -> {
             if (!lastInput.empty()) {
-                if (mathProblem == lastInput.peek()){
+                if (Objects.equals(mathProblem, lastInput.peek())){
                     lastInput.pop();
                 }
                 mathProblem = lastInput.pop();
@@ -141,15 +143,12 @@ public class MainActivity extends AppCompatActivity {
             lastInput.push(mathProblem);
         });
         mainBinding.equalButton.setOnClickListener(view -> {
-            StringBuilder builder = new StringBuilder();
-            for(String s : infixToPrefix(mathProblem)) {
-                builder.append(s);
-            }
-            String str = builder.toString();
-            mainBinding.answerFormula.setText(str);
+
+            mainBinding.answerFormula.setText(solvePrefix(infixToPrefix(mathProblem)));
         });
 
     }
+
 
     private void numberButtonFunction(String number,Stack<String> lastInput) {
 
@@ -290,6 +289,51 @@ public class MainActivity extends AppCompatActivity {
             String temp = validData[i];
             validData[i] = validData[validData.length - i - 1];
             validData[validData.length - i - 1] = temp;
+        }
+    }
+
+    public static String solvePrefix(String[] mathProblem) {
+        Stack<String> stack = new Stack<>();
+        String lastOne = "";
+        String answer = "";
+
+        for (int i = 0; i < mathProblem.length; i++){
+                lastOne = mathProblem[i];
+            pushPre(stack, lastOne);
+            answer = stack.peek();
+        }
+
+        return answer;
+    }
+
+    public static void pushPre(Stack<String> stack, String lastOne) {
+        if (isOperator(lastOne)) {
+            stack.push(lastOne);
+        } else {
+                if (stack.isEmpty() || isOperator(stack.peek())) {
+                    stack.push(lastOne);
+
+                } else {
+                    lastOne = solveMathProblem(lastOne, stack.pop(), stack.pop());
+                    pushPre(stack, lastOne);
+                }
+        }
+    }
+
+    public static String solveMathProblem(String firstNumber, String twiceNumber, String  operator){
+        switch (operator) {
+            case "+":
+                return String.valueOf(Double.parseDouble(firstNumber)+Double.parseDouble(twiceNumber));
+            case "-":
+                return String.valueOf((Double.parseDouble(twiceNumber)-Double.parseDouble(firstNumber)));
+            case "×":
+                return String.valueOf((Double.parseDouble(firstNumber)*Double.parseDouble(twiceNumber)));
+            case "/":
+                return String.valueOf((Double.parseDouble(twiceNumber)/Double.parseDouble(firstNumber)));
+            case "^":
+                return String.valueOf(pow(Double.parseDouble(twiceNumber),Double.parseDouble(firstNumber)));
+            default:
+                return "0";
         }
     }
 
